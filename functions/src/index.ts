@@ -2,9 +2,8 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 
 const app = admin.initializeApp();
-const db = app.firestore();
+// const db = app.firestore();
 
-const collectionUsers = db.collection("users");
 const region = "southamerica-east1";
 
 type User = {
@@ -14,6 +13,8 @@ type User = {
   telefone: string;
   endereco: string;
   curriculo: string;
+  fcmToken: string | unknown
+  status: boolean;
 };
 
 type Response = {
