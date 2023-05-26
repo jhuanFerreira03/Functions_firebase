@@ -1,8 +1,6 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 
-import {onDocumentUpdated, Change, FirestoreEvent,} from "firebase-functions/v2/firestore"
-
 const app = admin.initializeApp();
 // const db = app.firestore();
 
@@ -43,7 +41,7 @@ export const addUsers = functions
       data.endereco != undefined &&
       data.curriculo != undefined) {
       try {
-        await app.firestore().collection("Users").add(data);
+        await app.firestore().collection("Dentistas").add(data);
         Res.status = "Ok";
         Res.message = "Aparentemente foi";
         return Res;
@@ -57,13 +55,3 @@ export const addUsers = functions
     }
   });
 
-export const triggerNotifi = 
-  onDocumentUpdated("emergencias/{emergenciaId}", (event) => {
-    const data = event.data;
-    if (data !== undefined) {
-      const newValue = data.after.data();
-      if (newValue.status == "new"){
-        admin.app().firestore().collection("Users").get();
-      }
-    }
-  });
