@@ -55,3 +55,27 @@ export const addUsers = functions
     }
   });
 
+export const triggerNotifi = functions.region(region).firestore
+  .document("Emergencias/{id}")
+  .onCreate((snap, context) => {
+    const doc = snap.data();
+
+    const regisid = "f9V6N3_SRjGSyGRqgzkqjn:APA91bGHXTe" +
+    "jEUL9tJjMI-nZqof1NKik2K" +
+    "_PGzQ4a0ICo8nSReb1C7fJ6NWQQQeiUKaDCI_BEK8-" +
+    "yQqvzN4Yn3Aw5uvK4fB3EeHNMUhwkoiHMjiD" +
+    "_pA8P2oSrVOdNhFyxWWvk8ZvUpQg";
+    const message = {
+      data: {
+        title: "Emergencia",
+        text: doc.nome + " " + doc.telefone,
+      },
+      token: regisid,
+    };
+    admin.messaging().send(message)
+      .then((res) => {
+        console.log("message mandada: " + res + " " + doc);
+      }).catch((e) => {
+        console.log("message error: " + e + " " + doc);
+      });
+  });
