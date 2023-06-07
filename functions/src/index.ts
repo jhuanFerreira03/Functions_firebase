@@ -38,7 +38,7 @@ export const addUsers = functions
       data.email != undefined &&
       data.telefone != undefined &&
       data.uid != undefined &&
-      data.endereco != undefined &&
+      data.endereco!= undefined &&
       data.curriculo != undefined) {
       try {
         await app.firestore().collection("Dentistas").add(data);
