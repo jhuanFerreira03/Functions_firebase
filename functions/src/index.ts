@@ -80,3 +80,26 @@ export const triggerNotifi = functions.region(region).firestore
         });
     });
   });
+
+export const triggerNotifi2 = functions.region(region).firestore
+  .document("Atendimentos/{id}")
+  .onCreate(async (snap, context) => {
+    const doc = snap.data();
+    const message = {
+      data: {
+        title: "Emergencia Aceita",
+        em: doc.emergencia,
+      },
+      token: "token",
+    };
+    const result = await admin.app().firestore()
+      .collection("Dentistas").doc(doc.dentista.toString()).get();
+    message.token = result.data()?.fcmToken.toString();
+    admin.messaging().send(message)
+      .then((res) => {
+        console.log("message mandada: " + res + " " + doc.data()
+          .fcmToken.toString());
+      }).catch((e) => {
+        console.log("message error: " + e + " " + doc);
+      });
+  });
