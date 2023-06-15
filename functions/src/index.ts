@@ -64,6 +64,7 @@ export const triggerNotifi = functions.region(region).firestore
         title: "Emergencia",
         nome: doc.nome,
         telefone: doc.telefone,
+        id: context.params.id,
       },
       token: "fcmtoken",
     };
@@ -89,6 +90,7 @@ export const triggerNotifi2 = functions.region(region).firestore
       data: {
         title: "Emergencia Aceita",
         em: doc.emergencia,
+        id: context.params.id,
       },
       token: "token",
     };
